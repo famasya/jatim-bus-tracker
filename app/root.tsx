@@ -9,8 +9,11 @@ import {
 } from "@remix-run/react";
 import { NavBar } from "antd-mobile";
 import styles from "antd-mobile/bundle/style.css";
-import BottomFloatingPanel from "~/components/bottom-floating-panel";
+import { useLayoutEffect, useState } from "react";
+import BottomPanel from "~/components/bottom-panel";
 import global from "~/style.css";
+import NavBarLeftPanel from "./components/navbar-left-panel";
+import NavBarRightPanel from "./components/navbar-right-panel";
 
 export function links() {
   return [
@@ -29,7 +32,25 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
+export const useBrowserLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : () => {};
+
 export default function App() {
+  function useWindowSize() {
+    // handle viewport overflow on mobile https://stackoverflow.com/a/62794939
+    const [size, setSize] = useState([0, 0]);
+    useBrowserLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      window.addEventListener("resize", updateSize);
+      updateSize();
+      return () => window.removeEventListener("resize", updateSize);
+    }, []);
+    return size;
+  }
+  const [, windowHeight] = useWindowSize();
+
   return (
     <html lang="en">
       <head>
@@ -39,16 +60,22 @@ export default function App() {
       <body>
         <div className="app">
           <div className="top">
-            <NavBar>Map</NavBar>
+            <NavBar
+              right={<NavBarRightPanel />}
+              left={<NavBarLeftPanel />}
+              backArrow={false}
+            >
+              Map
+            </NavBar>
           </div>
-          <div style={{ height: "100vh" }}>
+          <div style={{ height: windowHeight - 96 }}>
             <Outlet />
             <ScrollRestoration />
             <Scripts />
             <LiveReload />
           </div>
           <div className="bottom">
-            <BottomFloatingPanel />
+            <BottomPanel />
           </div>
         </div>
       </body>

@@ -66,7 +66,7 @@ export default function TransJBusPos() {
             duration={1000}
             key={"m" + index}
             position={[pos.lat, pos.lng]}
-            icon={BusIcon}
+            icon={BusIcon({})}
           >
             <Popup key={"p" + index}>
               <h4>
@@ -87,7 +87,7 @@ export default function TransJBusPos() {
           <Marker
             key={"m" + index}
             position={[stop.sh_lat, stop.sh_lng]}
-            icon={BusStopIcon("yellow")}
+            icon={BusStopIcon({ color: "yellow" })}
           >
             <Popup key={"p" + index}>
               <h4>{stop.sh_name}</h4>

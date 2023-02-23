@@ -4,7 +4,7 @@ body {
 }
 
 .app {
-  height: 100vh;
+  max-height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
 }
@@ -23,6 +23,8 @@ body {
 
 .bottom {
   flex: 0;
+  /* position: fixed;
+  bottom: calc(96px + (100vh - 100%)); */
   border-top: solid 1px var(--adm-color-border);
 }
 
@@ -33,4 +35,17 @@ body {
 .search-container .adm-space-item {
   flex: auto !important;
   padding: 0px 10px;
+}
+/* .input-search .adm-input-element {
+  font-size: 24px !important;
+} */
+
+.leaflet-control-attribution {
+  display: none;
+}
+.full-height-container {
+  /* height: 100vh; */
+  /* height: calc(100vh - 96px); */
+  height: 100%;
+  max-height: -webkit-fill-available;
 }

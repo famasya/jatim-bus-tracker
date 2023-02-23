@@ -18,10 +18,18 @@ export interface TransJBusStop {
   tw_lng: number;
 }
 
-export interface BusStop {
-  id: string;
-  name: string;
+export interface SBusStop {
+  uniqid: string;
+  nama: string;
   description: string;
   lat: string;
   lon: string;
+  arah: number;
+  priority: number;
+  timetable: string;
+}
+
+export interface SbusStopResponse {
+  key: string;
+  stops: SBusStop[];
 }

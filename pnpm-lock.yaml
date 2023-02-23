@@ -19,8 +19,10 @@ specifiers:
   ol: ^7.2.2
   papaparse: ^5.3.2
   react: ^18.2.0
+  react-div-100vh: ^0.7.0
   react-dom: ^18.2.0
   react-leaflet: ^4.2.0
+  react-leaflet-cluster: ^2.1.0
   react-leaflet-drift-marker: ^4.0.0
   react-router-dom: ^6.8.1
   socket.io-client: ^4.6.1
@@ -38,8 +40,10 @@ dependencies:
   ol: 7.2.2
   papaparse: 5.3.2
   react: 18.2.0
+  react-div-100vh: 0.7.0_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-leaflet: 4.2.0_yydtlhsdonbqao6vgvkwhv2zki
+  react-leaflet-cluster: 2.1.0_ty7ki424t7c4kmz5t6ihqdtzye
   react-leaflet-drift-marker: 4.0.0_wxqjdekrmljiqiednc3nts4niq
   react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
   socket.io-client: 4.6.1
@@ -5034,6 +5038,14 @@ packages:
       leaflet: 1.9.3
     dev: false
 
+  /leaflet.markercluster/1.5.3_leaflet@1.9.3:
+    resolution: {integrity: sha512-vPTw/Bndq7eQHjLBVlWpnGeLa3t+3zGiuM7fJwCkiMFq+nmRuG3RI3f7f4N4TDX7T4NpbAXpR2+NTRSEGfCSeA==}
+    peerDependencies:
+      leaflet: ^1.3.1
+    dependencies:
+      leaflet: 1.9.3
+    dev: false
+
   /leaflet/1.9.3:
     resolution: {integrity: sha512-iB2cR9vAkDOu5l3HAay2obcUHZ7xwUBBjph8+PGtmW/2lYhbLizWtG7nTeYht36WfOslixQF9D/uSIzhZgGMfQ==}
     dev: false
@@ -6406,6 +6418,14 @@ packages:
       react-is: 16.13.1
     dev: false
 
+  /react-div-100vh/0.7.0_react@18.2.0:
+    resolution: {integrity: sha512-I3d77tQyaSlOx/6vurDDLk7upb5GA2ldEtVXkk7Kn5cy+tLlS0KlqDK14xUxlxh7jz4StjgKcwFyrpymsPpomA==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -6421,6 +6441,21 @@ packages:
 
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
+
+  /react-leaflet-cluster/2.1.0_ty7ki424t7c4kmz5t6ihqdtzye:
+    resolution: {integrity: sha512-16X7XQpRThQFC4PH4OpXHimGg19ouWmjxjtpxOeBKpvERSvIRqTx7fvhTwkEPNMFTQ8zTfddz6fRTUmUEQul7g==}
+    peerDependencies:
+      leaflet: ^1.8.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      react-leaflet: ^4.0.0
+    dependencies:
+      leaflet: 1.9.3
+      leaflet.markercluster: 1.5.3_leaflet@1.9.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-leaflet: 4.2.0_yydtlhsdonbqao6vgvkwhv2zki
+    dev: false
 
   /react-leaflet-drift-marker/4.0.0_wxqjdekrmljiqiednc3nts4niq:
     resolution: {integrity: sha512-lOGVYEXOtKqS+g+XvcH2fabntfkFw3L7CG09SOcrqAslhv9cOwSgqG8kpXXaJYDGnKhpJQtb01AGu0o9Trmesg==}
