@@ -1,4 +1,4 @@
-import { FloatingBubble, List, Popup, Switch } from "antd-mobile";
+import { Button, FloatingBubble, List, Popup, Switch } from "antd-mobile";
 import { SetOutline } from "antd-mobile-icons";
 import { useState } from "react";
 import { useFilterState } from "~/common/states";
@@ -45,7 +45,7 @@ export default function MapFilter() {
           <List
             mode="card"
             header="Pengaturan Umum"
-            style={{ marginTop: 0, width: "30vw" }}
+            style={{ marginTop: 0, minWidth: "30vw" }}
           >
             <List.Item>
               <SetLocation />
@@ -66,7 +66,7 @@ export default function MapFilter() {
           <List
             mode="card"
             header="Surabaya Bus"
-            style={{ marginTop: 0, width: "30vw" }}
+            style={{ marginTop: 0, minWidth: "30vw" }}
           >
             <List.Item
               extra={<Switch defaultChecked={showSBus} onChange={toggleSBus} />}
@@ -88,7 +88,7 @@ export default function MapFilter() {
           <List
             mode="card"
             header="Trans Jatim"
-            style={{ marginTop: 0, width: "30vw" }}
+            style={{ marginTop: 0, minWidth: "30vw" }}
           >
             <List.Item
               extra={
@@ -108,6 +108,16 @@ export default function MapFilter() {
               Halte
             </List.Item>
           </List>
+          <Button
+            style={{
+              marginLeft: 10,
+              width: "calc(100% - 20px)",
+              background: "#ececec",
+            }}
+            onClick={() => toggleFilterPopup(false)}
+          >
+            Tutup pengaturan
+          </Button>
         </div>
       </Popup>
     </>
