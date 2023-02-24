@@ -20,7 +20,7 @@ export default function TransJBusPos() {
 
   const loadTransJPositions = async () => {
     const resource = await fetch(
-      "https://transj-rev-prox.abidf.my.id/api/findAll",
+      `${window.ENV.TRANSJ_TRACKER_ENDPOINT}/api/findAll`,
       {
         method: "POST",
         headers: {
@@ -39,7 +39,7 @@ export default function TransJBusPos() {
         setPositions(results);
       })
       .then(() => {
-        const socket: Socket = io("https://transj-rev-prox.abidf.my.id");
+        const socket: Socket = io(`${window.ENV.TRANSJ_TRACKER_ENDPOINT}`);
         socket.on("update_jatim", (event: TransJEvent) => {
           setPositions((positions) =>
             positions.map((item, i) => {

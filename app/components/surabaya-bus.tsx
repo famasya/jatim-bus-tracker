@@ -1,3 +1,4 @@
+import { json } from "@remix-run/node";
 import { useEffect, useState } from "react";
 import { Marker, Popup } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
@@ -12,21 +13,13 @@ import {
   SbusStopResponse,
 } from "~/interfaces/common";
 
-const loadSBusStops = async () => {
-  const resource = await fetch(
-    "https://bus-tracker.workers.abidf.my.id/sbus-stops"
-  );
-  const locations = (await resource.json()) as SbusStopResponse[];
-  return locations;
-};
-
-const loadSBusPositions = async () => {
-  const resource = await fetch(
-    "https://bus-tracker.workers.abidf.my.id/sbus-positions"
-  );
-  const positions = (await resource.json()) as SBusPositionsResponse[];
-  return positions;
-};
+export async function loader() {
+  return json({
+    ENV: {
+      SBUS_TRACKER_ENDPOINT: process.env.SBUS_TRACKER_ENDPOINT,
+    },
+  });
+}
 
 export default function SurabayaBus() {
   const [busStops, setBusStops] = useState<SBusStop[]>([]);
@@ -34,6 +27,22 @@ export default function SurabayaBus() {
   const { showSBusStops, autoUpdateSBus, showSBus } = useFilterState(
     (state) => state
   );
+
+  const loadSBusStops = async () => {
+    const resource = await fetch(
+      `${window.ENV.SBUS_TRACKER_ENDPOINT}/sbus-stops`
+    );
+    const locations = (await resource.json()) as SbusStopResponse[];
+    return locations;
+  };
+
+  const loadSBusPositions = async () => {
+    const resource = await fetch(
+      `${window.ENV.SBUS_TRACKER_ENDPOINT}/sbus-positions`
+    );
+    const positions = (await resource.json()) as SBusPositionsResponse[];
+    return positions;
+  };
 
   const autoLoadPosition = () => {
     loadSBusPositions().then((currentPositions) => {

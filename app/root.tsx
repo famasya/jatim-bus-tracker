@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import { json, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import { NavBar } from "antd-mobile";
 import styles from "antd-mobile/bundle/style.css";
@@ -35,8 +36,17 @@ export const meta: MetaFunction = () => ({
 export const useBrowserLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : () => {};
 
+export async function loader() {
+  return json({
+    ENV: {
+      TRANSJ_TRACKER_ENDPOINT: process.env.TRANSJ_TRACKER_ENDPOINT,
+      SBUS_TRACKER_ENDPOINT: process.env.SBUS_TRACKER_ENDPOINT,
+    },
+  });
+}
+
 export default function App() {
-  function useWindowSize() {
+  const useWindowSize = () => {
     // handle viewport overflow on mobile https://stackoverflow.com/a/62794939
     const [size, setSize] = useState([0, 0]);
     useBrowserLayoutEffect(() => {
@@ -48,8 +58,9 @@ export default function App() {
       return () => window.removeEventListener("resize", updateSize);
     }, []);
     return size;
-  }
+  };
   const [, windowHeight] = useWindowSize();
+  const data = useLoaderData<typeof loader>();
 
   return (
     <html lang="en">
@@ -78,6 +89,12 @@ export default function App() {
             <BottomPanel />
           </div>
         </div>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }}
+        />
+        <Scripts />
       </body>
     </html>
   );
