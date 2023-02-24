@@ -1,4 +1,3 @@
-import { json } from "@remix-run/node";
 import { useEffect, useState } from "react";
 import { Marker, Popup } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
@@ -12,14 +11,6 @@ import {
   SBusStop,
   SbusStopResponse,
 } from "~/interfaces/common";
-
-export async function loader() {
-  return json({
-    ENV: {
-      SBUS_TRACKER_ENDPOINT: process.env.SBUS_TRACKER_ENDPOINT,
-    },
-  });
-}
 
 export default function SurabayaBus() {
   const [busStops, setBusStops] = useState<SBusStop[]>([]);

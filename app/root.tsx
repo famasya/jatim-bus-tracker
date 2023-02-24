@@ -1,4 +1,4 @@
-import { json, MetaFunction } from "@remix-run/node";
+import { json, LoaderArgs, MetaFunction } from "@remix-run/cloudflare";
 import {
   Links,
   LiveReload,
@@ -29,18 +29,18 @@ export function links() {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "Jatim Bus Map",
   viewport: "width=device-width,initial-scale=1,maximum-scale=1",
 });
 
 export const useBrowserLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : () => {};
 
-export async function loader() {
+export async function loader({ context }: LoaderArgs) {
   return json({
     ENV: {
-      TRANSJ_TRACKER_ENDPOINT: process.env.TRANSJ_TRACKER_ENDPOINT,
-      SBUS_TRACKER_ENDPOINT: process.env.SBUS_TRACKER_ENDPOINT,
+      TRANSJ_TRACKER_ENDPOINT: context.TRANSJ_TRACKER_ENDPOINT,
+      SBUS_TRACKER_ENDPOINT: context.SBUS_TRACKER_ENDPOINT,
     },
   });
 }
