@@ -5,22 +5,21 @@ import {
   TravelOutline,
 } from "antd-mobile-icons";
 import { useLocation, useNavigate } from "react-router-dom";
-import MapFilter from "./map-filter";
 
 const tabs = [
   {
     key: "/",
-    title: "Home",
+    title: "Peta",
     icon: <TravelOutline />,
   },
   {
     key: "/city-bus-routes",
-    title: "City Bus Routes",
+    title: "Rute Bus Kota",
     icon: <ContentOutline />,
   },
   {
     key: "/about",
-    title: "About",
+    title: "Tentang",
     icon: <FaceRecognitionOutline />,
   },
 ];
@@ -35,7 +34,6 @@ export default function BottomPanel() {
   };
   return (
     <>
-      <MapFilter />
       <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
         {tabs.map((item) => (
           <TabBar.Item key={item.key} icon={item.icon} title={item.title} />

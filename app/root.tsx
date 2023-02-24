@@ -41,6 +41,7 @@ export async function loader({ context }: LoaderArgs) {
     ENV: {
       TRANSJ_TRACKER_ENDPOINT: context.TRANSJ_TRACKER_ENDPOINT,
       SBUS_TRACKER_ENDPOINT: context.SBUS_TRACKER_ENDPOINT,
+      SBUS_TRACKER_REV_PROX: context.SBUS_TRACKER_REV_PROX,
     },
   });
 }
@@ -76,7 +77,7 @@ export default function App() {
               left={<NavBarLeftPanel />}
               backArrow={false}
             >
-              Map
+              Peta Bus Jatim
             </NavBar>
           </div>
           <div style={{ height: windowHeight - 96 }}>

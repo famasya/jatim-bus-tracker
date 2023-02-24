@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { Map, Marker as LMarker } from "leaflet";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { Marker, Popup } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 import { useFilterState } from "~/common/states";
@@ -11,13 +12,19 @@ import {
   SBusStop,
   SbusStopResponse,
 } from "~/interfaces/common";
+import TimetableModal from "./timetable-modal";
 
-export default function SurabayaBus() {
+export default function SurabayaBus(props: { mapRef: RefObject<Map> }) {
+  const markerRef = useRef<Array<LMarker | null>>([]);
   const [busStops, setBusStops] = useState<SBusStop[]>([]);
   const [busPositions, setBusPositions] = useState<SBusPositions[]>([]);
-  const { showSBusStops, autoUpdateSBus, showSBus } = useFilterState(
-    (state) => state
-  );
+  const {
+    showSBusStops,
+    autoUpdateSBus,
+    showSBus,
+    storeBusStops,
+    selectedBusStop,
+  } = useFilterState((state) => state);
 
   const loadSBusStops = async () => {
     const resource = await fetch(
@@ -59,12 +66,31 @@ export default function SurabayaBus() {
 
   useEffect(() => {
     loadSBusStops().then((stops) => {
-      const allStops = stops.map((stop) => stop.stops);
-      setBusStops(allStops.flat());
+      const allStops = stops.map((stop) => stop.stops).flat();
+      setBusStops(allStops);
+      allStops.map((stop) => storeBusStops("Suroboyo Bus", stop.nama));
     });
 
+    if (selectedBusStop) {
+      const map = props.mapRef.current;
+      const marker = markerRef.current;
+      const stopIdx = busStops.findIndex(
+        (stop) => stop.nama == selectedBusStop
+      );
+      if (stopIdx > 0 && map && marker) {
+        map.flyTo(
+          [
+            parseFloat(busStops[stopIdx].lat),
+            parseFloat(busStops[stopIdx].lon),
+          ],
+          13
+        );
+        marker[stopIdx]?.openPopup();
+      }
+    }
+
     autoLoadPosition();
-  }, []);
+  }, [selectedBusStop]);
 
   return (
     <div key={"sbus-pos-map"}>
@@ -91,6 +117,7 @@ export default function SurabayaBus() {
         busStops.map((stop, index) => {
           return (
             <Marker
+              ref={(el) => (markerRef.current[index] = el)}
               key={"m" + index}
               position={[parseFloat(stop.lat), parseFloat(stop.lon)]}
               icon={BusStopIcon({ color: "blue" })}
@@ -98,6 +125,7 @@ export default function SurabayaBus() {
               <Popup key={"p" + index}>
                 <h4>{stop.nama}</h4>
                 <p>{stop.description}</p>
+                <TimetableModal content={stop.timetable} />
               </Popup>
             </Marker>
           );

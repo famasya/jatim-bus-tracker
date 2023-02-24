@@ -8,6 +8,7 @@ declare global {
     ENV: {
       SBUS_TRACKER_ENDPOINT: string;
       TRANSJ_TRACKER_ENDPOINT: string;
+      SBUS_TRACKER_REV_PROX: string;
     };
   }
 }

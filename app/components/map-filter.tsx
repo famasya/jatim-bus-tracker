@@ -2,6 +2,7 @@ import { FloatingBubble, List, Popup, Switch } from "antd-mobile";
 import { SetOutline } from "antd-mobile-icons";
 import { useState } from "react";
 import { useFilterState } from "~/common/states";
+import SetLocation from "./set-location";
 
 export default function MapFilter() {
   const [filterPopup, toggleFilterPopup] = useState(false);
@@ -43,9 +44,13 @@ export default function MapFilter() {
         <div style={{ background: "#f5f5f5", height: "100%" }}>
           <List
             mode="card"
-            header="General"
+            header="Pengaturan Umum"
             style={{ marginTop: 0, minWidth: "30vw" }}
           >
+            <List.Item>
+              <SetLocation />
+            </List.Item>
+
             <List.Item
               extra={
                 <Switch
@@ -60,28 +65,14 @@ export default function MapFilter() {
 
           <List
             mode="card"
-            header="Bus Positions"
+            header="Surabaya Bus"
             style={{ marginTop: 0, minWidth: "30vw" }}
           >
             <List.Item
               extra={<Switch defaultChecked={showSBus} onChange={toggleSBus} />}
             >
-              Suroboyo-Bus
+              Posisi Bus
             </List.Item>
-            <List.Item
-              extra={
-                <Switch defaultChecked={showTransJ} onChange={toggleTransJ} />
-              }
-            >
-              Trans Jatim
-            </List.Item>
-          </List>
-
-          <List
-            mode="card"
-            header="Bus Stops"
-            style={{ marginTop: 0, minWidth: "30vw" }}
-          >
             <List.Item
               extra={
                 <Switch
@@ -90,7 +81,21 @@ export default function MapFilter() {
                 />
               }
             >
-              Suroboyo-Bus
+              Halte
+            </List.Item>
+          </List>
+
+          <List
+            mode="card"
+            header="Trans Jatim"
+            style={{ marginTop: 0, minWidth: "30vw" }}
+          >
+            <List.Item
+              extra={
+                <Switch defaultChecked={showTransJ} onChange={toggleTransJ} />
+              }
+            >
+              Posisi Bus
             </List.Item>
             <List.Item
               extra={
@@ -100,7 +105,7 @@ export default function MapFilter() {
                 />
               }
             >
-              Trans Jatim
+              Halte
             </List.Item>
           </List>
         </div>

@@ -1,3 +1,4 @@
+import { Skeleton } from "antd-mobile";
 import { ReactNode, useEffect, useState } from "react";
 
 export function ClientOnly({ children }: { children: ReactNode }) {
@@ -5,5 +6,17 @@ export function ClientOnly({ children }: { children: ReactNode }) {
   useEffect(() => {
     setMounted(true);
   }, []);
-  return mounted ? <>{children}</> : <>Loading...</>;
+  return mounted ? (
+    <>{children}</>
+  ) : (
+    <>
+      <Skeleton
+        animated
+        style={{
+          "--width": "100%",
+          "--height": "100%",
+        }}
+      />
+    </>
+  );
 }

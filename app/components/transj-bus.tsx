@@ -1,5 +1,5 @@
-import { LatLngExpression } from "leaflet";
-import { useEffect, useState } from "react";
+import { LatLngExpression, Map, Marker as LMarker } from "leaflet";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { Marker, Polyline, Popup } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 import { io, Socket } from "socket.io-client";
@@ -14,9 +14,11 @@ import stops from "~/static/transj-bus-stops.json";
 const busRoutes = routes as LatLngExpression[];
 const busStops = stops as TransJBusStop[];
 
-export default function TransJBusPos() {
+export default function TransJBusPos(props: { mapRef: RefObject<Map> }) {
+  const markerRef = useRef<Array<LMarker | null>>([]);
   const [positions, setPositions] = useState<TransJEvent[]>([]);
-  const { showTransJStops, showTransJ } = useFilterState((state) => state);
+  const { showTransJStops, showTransJ, storeBusStops, selectedBusStop } =
+    useFilterState((state) => state);
 
   const loadTransJPositions = async () => {
     const resource = await fetch(
@@ -34,6 +36,7 @@ export default function TransJBusPos() {
   };
 
   useEffect(() => {
+    busStops.map((stop) => storeBusStops("Trans Jatim", stop.sh_name));
     loadTransJPositions()
       .then((results) => {
         setPositions(results);
@@ -52,7 +55,19 @@ export default function TransJBusPos() {
           );
         });
       });
-  }, []);
+
+    if (selectedBusStop) {
+      const marker = markerRef.current;
+      const stopIdx = busStops.findIndex(
+        (stop) => stop.sh_name == selectedBusStop
+      );
+      const map = props.mapRef.current;
+      if (stopIdx > 0 && map && marker) {
+        map.flyTo([busStops[stopIdx].sh_lat, busStops[stopIdx].sh_lng], 13);
+        marker[stopIdx]?.openPopup();
+      }
+    }
+  }, [selectedBusStop]);
 
   return (
     <div key={"transj-pos-map"}>
@@ -89,6 +104,7 @@ export default function TransJBusPos() {
         busStops.map((stop, index) => {
           return (
             <Marker
+              ref={(el) => (markerRef.current[index] = el)}
               key={"m" + index}
               position={[stop.sh_lat, stop.sh_lng]}
               icon={BusStopIcon({ color: "yellow" })}

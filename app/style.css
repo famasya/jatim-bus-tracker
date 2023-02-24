@@ -44,8 +44,19 @@ body {
   display: none;
 }
 .full-height-container {
-  /* height: 100vh; */
-  /* height: calc(100vh - 96px); */
   height: 100%;
   max-height: -webkit-fill-available;
+}
+
+.searchBarContainer {
+  padding: 12px;
+  border-bottom: solid 1px var(--adm-color-border);
+}
+.checkListContainer {
+  height: 300px;
+  overflow-y: scroll;
+}
+.myCheckList {
+  --border-top: 0;
+  --border-bottom: 0;
 }
