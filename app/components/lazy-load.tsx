@@ -1,4 +1,3 @@
-import { Skeleton } from "antd-mobile";
 import { ReactNode, useEffect, useState } from "react";
 
 export function ClientOnly({ children }: { children: ReactNode }) {
@@ -9,14 +8,8 @@ export function ClientOnly({ children }: { children: ReactNode }) {
   return mounted ? (
     <>{children}</>
   ) : (
-    <>
-      <Skeleton
-        animated
-        style={{
-          "--width": "100%",
-          "--height": "100%",
-        }}
-      />
-    </>
+    <div style={{ height: "100%", textAlign: "center" }}>
+      <h4>Memuat peta...</h4>
+    </div>
   );
 }

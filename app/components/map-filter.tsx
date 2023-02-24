@@ -45,7 +45,7 @@ export default function MapFilter() {
           <List
             mode="card"
             header="Pengaturan Umum"
-            style={{ marginTop: 0, minWidth: "30vw" }}
+            style={{ marginTop: 0, width: "30vw" }}
           >
             <List.Item>
               <SetLocation />
@@ -66,7 +66,7 @@ export default function MapFilter() {
           <List
             mode="card"
             header="Surabaya Bus"
-            style={{ marginTop: 0, minWidth: "30vw" }}
+            style={{ marginTop: 0, width: "30vw" }}
           >
             <List.Item
               extra={<Switch defaultChecked={showSBus} onChange={toggleSBus} />}
@@ -88,7 +88,7 @@ export default function MapFilter() {
           <List
             mode="card"
             header="Trans Jatim"
-            style={{ marginTop: 0, minWidth: "30vw" }}
+            style={{ marginTop: 0, width: "30vw" }}
           >
             <List.Item
               extra={
