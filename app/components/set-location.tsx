@@ -1,12 +1,4 @@
-import {
-  Button,
-  CheckList,
-  Ellipsis,
-  Popup,
-  SearchBar,
-  Space,
-  Tag,
-} from "antd-mobile";
+import { Button, CheckList, Popup, SearchBar, Space, Tag } from "antd-mobile";
 import { useMemo, useState } from "react";
 import { useFilterState } from "~/common/states";
 
@@ -43,7 +35,7 @@ export default function SetLocation() {
         >
           Atur lokasi Anda
         </Button>
-        <Ellipsis content={selectedBusStop ?? ""} />
+        {selectedBusStop ? selectedBusStop.substring(0, 12) + "..." : null}
       </Space>
 
       <Popup
