@@ -7,7 +7,7 @@ const Map = () => {
   return (
     <MapContainer
       zoom={11}
-      scrollWheelZoom={false}
+      scrollWheelZoom={true}
       center={[-7.2575, 112.7521]}
       className={"full-height-container"}
     >

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Marker, Polyline, Popup } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 import { io, Socket } from "socket.io-client";
+import { useFilterState } from "~/common/states";
 import { BusIcon } from "~/icons/bus";
 import { BusStopIcon } from "~/icons/bus-stop";
 import { TransJBusStop } from "~/interfaces/common";
@@ -15,6 +16,7 @@ const busStops = stops as TransJBusStop[];
 
 export default function TransJBusPos() {
   const [positions, setPositions] = useState<TransJEvent[]>([]);
+  const { showTransJStops, showTransJ } = useFilterState((state) => state);
 
   const loadTransJPositions = async () => {
     const resource = await fetch(
@@ -60,44 +62,46 @@ export default function TransJBusPos() {
       />
 
       {/* Bus pos */}
-      {positions.map((pos, index) => {
-        return (
-          <ReactLeafletDriftMarker
-            duration={1000}
-            key={"m" + index}
-            position={[pos.lat, pos.lng]}
-            icon={BusIcon({})}
-          >
-            <Popup key={"p" + index}>
-              <h4>
-                {pos.plate_number} ({pos.name})
-              </h4>
-              <p>
-                Passenger : {pos.passenger} <br />
-                Synced : {pos.dt_tracker}
-              </p>
-            </Popup>
-          </ReactLeafletDriftMarker>
-        );
-      })}
+      {showTransJ &&
+        positions.map((pos, index) => {
+          return (
+            <ReactLeafletDriftMarker
+              duration={1000}
+              key={"m" + index}
+              position={[pos.lat, pos.lng]}
+              icon={BusIcon({ color: "orange" })}
+            >
+              <Popup key={"p" + index}>
+                <h4>
+                  {pos.plate_number} ({pos.name})
+                </h4>
+                <p>
+                  Passenger : {pos.passenger} <br />
+                  Synced : {pos.dt_tracker}
+                </p>
+              </Popup>
+            </ReactLeafletDriftMarker>
+          );
+        })}
 
       {/* Bus stops */}
-      {busStops.map((stop, index) => {
-        return (
-          <Marker
-            key={"m" + index}
-            position={[stop.sh_lat, stop.sh_lng]}
-            icon={BusStopIcon({ color: "yellow" })}
-          >
-            <Popup key={"p" + index}>
-              <h4>{stop.sh_name}</h4>
-              <p>
-                From : {stop.origin} <br /> To : {stop.toward}
-              </p>
-            </Popup>
-          </Marker>
-        );
-      })}
+      {showTransJStops &&
+        busStops.map((stop, index) => {
+          return (
+            <Marker
+              key={"m" + index}
+              position={[stop.sh_lat, stop.sh_lng]}
+              icon={BusStopIcon({ color: "yellow" })}
+            >
+              <Popup key={"p" + index}>
+                <h4>{stop.sh_name}</h4>
+                <p>
+                  From : {stop.origin} <br /> To : {stop.toward}
+                </p>
+              </Popup>
+            </Marker>
+          );
+        })}
     </div>
   );
 }

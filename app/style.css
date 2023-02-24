@@ -32,13 +32,13 @@ body {
   overflow-y: auto !important;
 }
 
-.search-container .adm-space-item {
-  flex: auto !important;
+.floating-bottom {
   padding: 0px 10px;
 }
-/* .input-search .adm-input-element {
-  font-size: 24px !important;
-} */
+
+.search-container .adm-space-item {
+  flex: auto !important;
+}
 
 .leaflet-control-attribution {
   display: none;

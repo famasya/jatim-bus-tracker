@@ -33,3 +33,18 @@ export interface SbusStopResponse {
   key: string;
   stops: SBusStop[];
 }
+
+export interface SBusPositions {
+  info: string;
+  lat: string;
+  lng: string;
+  tracked_at?: string;
+  direction: number;
+  active?: number;
+  kuning?: number;
+}
+
+export interface SBusPositionsResponse {
+  key: "bustracktij" | "bustracktumpuk" | "bustrackutara";
+  positions: SBusPositions[];
+}

@@ -1,16 +1,22 @@
-import { FloatingBubble, TabBar } from "antd-mobile";
+import { TabBar } from "antd-mobile";
 import {
+  ContentOutline,
   FaceRecognitionOutline,
-  FilterOutline,
   TravelOutline,
 } from "antd-mobile-icons";
 import { useLocation, useNavigate } from "react-router-dom";
+import MapFilter from "./map-filter";
 
 const tabs = [
   {
     key: "/",
     title: "Home",
     icon: <TravelOutline />,
+  },
+  {
+    key: "/city-bus-routes",
+    title: "City Bus Routes",
+    icon: <ContentOutline />,
   },
   {
     key: "/about",
@@ -29,17 +35,7 @@ export default function BottomPanel() {
   };
   return (
     <>
-      <FloatingBubble
-        style={{
-          "--initial-position-bottom": "60px",
-          "--initial-position-right": "24px",
-          "--edge-distance": "24px",
-          zIndex: 9999,
-          position: "absolute",
-        }}
-      >
-        <FilterOutline fontSize={32} />
-      </FloatingBubble>
+      <MapFilter />
       <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
         {tabs.map((item) => (
           <TabBar.Item key={item.key} icon={item.icon} title={item.title} />

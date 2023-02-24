@@ -1,4 +1,4 @@
-import { Space, Switch } from "antd-mobile";
+import { Space } from "antd-mobile";
 import { useState } from "react";
 
 export default function NavBarLeftPanel() {
@@ -6,12 +6,7 @@ export default function NavBarLeftPanel() {
 
   return (
     <div>
-      <Space style={{ "--gap": "16px" }}>
-        <Switch
-          checked={autoRefresh}
-          onChange={() => toggleAutoRefresh(!autoRefresh)}
-        />
-      </Space>
+      <Space style={{ "--gap": "16px" }}></Space>
     </div>
   );
 }

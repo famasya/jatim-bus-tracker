@@ -25,7 +25,8 @@
     "react-leaflet-cluster": "^2.1.0",
     "react-leaflet-drift-marker": "^4.0.0",
     "react-router-dom": "^6.8.1",
-    "socket.io-client": "^4.6.1"
+    "socket.io-client": "^4.6.1",
+    "zustand": "^4.3.3"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.13.0",
