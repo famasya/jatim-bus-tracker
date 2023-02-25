@@ -39,15 +39,15 @@ export default function NavBarRightPanel() {
               waktu-nyata (<i>real-time</i>).
             </li>
             <li>
-              Untuk Surabaya Bus perlu dinyalakan konfigurasi waktu-nyata pada
-              menu pengaturan. Posisi Surabaya Bus akan disinkronisasi tiap 10
+              Untuk Suroboyo Bus perlu dinyalakan konfigurasi waktu-nyata pada
+              menu pengaturan. Posisi Suroboyo Bus akan disinkronisasi tiap 10
               detik.
             </li>
           </ol>
 
           <a href="https://tally.so/r/nG6pOZ" target={"_blank"}>
             <Button size="small">
-              <LinkOutline /> Ada masukan?
+              <LinkOutline /> Kirim masukan
             </Button>
           </a>
         </div>

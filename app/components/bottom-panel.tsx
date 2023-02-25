@@ -1,8 +1,8 @@
 import { TabBar } from "antd-mobile";
 import {
+  CompassOutline,
   ContentOutline,
   FaceRecognitionOutline,
-  TravelOutline,
 } from "antd-mobile-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const tabs = [
   {
     key: "/",
     title: "Peta",
-    icon: <TravelOutline />,
+    icon: <CompassOutline />,
   },
   {
     key: "/city-bus-routes",

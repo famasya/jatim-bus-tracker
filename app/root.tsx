@@ -29,7 +29,8 @@ export function links() {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Jatim Bus Map",
+  title: "Peta Bus Jatim",
+  description: "Peta Bus Jatim Realtime, Suroboyo Bus dan Trans Jatim",
   viewport: "width=device-width,initial-scale=1,maximum-scale=1",
 });
 
@@ -94,6 +95,12 @@ export default function App() {
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
           }}
+        />
+        <script
+          async
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "108666c2351e440fbcd42a903db8f8dc"}'
         />
         <Scripts />
       </body>

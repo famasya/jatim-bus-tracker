@@ -65,7 +65,7 @@ export default function MapFilter() {
 
           <List
             mode="card"
-            header="Surabaya Bus"
+            header="Suroboyo Bus"
             style={{ marginTop: 0, minWidth: "30vw" }}
           >
             <List.Item

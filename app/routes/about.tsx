@@ -7,7 +7,7 @@ export default function About() {
       <p>
         Situs ini dibuat dengan kode sumber terbuka. Jika Anda tertarik, silakan
         buat <i>Pull Request</i> pada repository aplikasi ini. Atau jika ingin
-        berkomunikasi langsung dengan saya, sapa saya di Twitter. :)
+        berkomunikasi langsung dengan saya, sapa saya di Twitter.
       </p>
       <Space>
         <a

@@ -2,11 +2,13 @@ import { Map as LMap } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useRef } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
+import MapFilter from "./map-filter";
 import SurabayaBus from "./surabaya-bus";
 import TransJBusPos from "./transj-bus";
 
 const Map = () => {
   const mapRef = useRef<LMap>(null);
+
   return (
     <MapContainer
       zoom={11}
@@ -21,6 +23,7 @@ const Map = () => {
       />
       <TransJBusPos mapRef={mapRef} />
       <SurabayaBus mapRef={mapRef} />
+      <MapFilter />
     </MapContainer>
   );
 };

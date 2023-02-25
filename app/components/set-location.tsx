@@ -12,6 +12,7 @@ export default function SetLocation() {
     showSBusStops,
     showTransJStops,
   } = useFilterState((state) => state);
+
   const filteredStops = useMemo(() => {
     if (searchText) {
       return busStops.filter((stop) =>
@@ -19,7 +20,6 @@ export default function SetLocation() {
       );
     } else {
       return busStops.filter((stop) => {
-        console.log(showSBusStops, stop.type);
         if (showSBusStops && stop.type == "Suroboyo Bus") return stop;
         if (showTransJStops && stop.type == "Trans Jatim") return stop;
       });
@@ -33,7 +33,7 @@ export default function SetLocation() {
           onClick={() => toggleSelector(!selectorVisible)}
           loading={busStops.length < 1}
         >
-          Atur lokasi Anda
+          Pilih lokasi halte
         </Button>
         {selectedBusStop ? selectedBusStop.substring(0, 12) + "..." : null}
       </Space>
