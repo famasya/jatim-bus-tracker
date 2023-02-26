@@ -14,12 +14,7 @@ export default function TimetableModal(props: { content?: string }) {
   };
 
   return (
-    <Button
-      size="small"
-      type="button"
-      disabled={content.length == 0}
-      onClick={showModal}
-    >
+    <Button size="small" type="button" onClick={showModal}>
       Show timetable
     </Button>
   );
