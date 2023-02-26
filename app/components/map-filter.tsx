@@ -59,7 +59,7 @@ export default function MapFilter() {
                 />
               }
             >
-              Auto update Suroboyo-Bus
+              Auto update Suroboyo Bus
             </List.Item>
           </List>
 

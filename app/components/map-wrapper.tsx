@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import { useRef } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MapFilter from "./map-filter";
-import SurabayaBus from "./surabaya-bus";
+import SurabayaBus from "./suroboyo-bus";
 import TransJBusPos from "./transj-bus";
 
 const Map = () => {
@@ -13,6 +13,7 @@ const Map = () => {
     <MapContainer
       zoom={11}
       ref={mapRef}
+      preferCanvas={true}
       scrollWheelZoom={true}
       center={[-7.2575, 112.7521]}
       className={"full-height-container"}

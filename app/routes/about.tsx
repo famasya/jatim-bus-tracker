@@ -5,9 +5,25 @@ export default function About() {
   return (
     <div className={"full-height-container"} style={{ padding: 10 }}>
       <p>
-        Situs ini dibuat dengan kode sumber terbuka. Jika Anda tertarik, silakan
-        buat <i>Pull Request</i> pada repository aplikasi ini. Atau jika ingin
-        berkomunikasi langsung dengan saya, sapa saya di Twitter.
+        Situs ini dibuat dengan kode sumber terbuka (open source). Jika Anda
+        tertarik, silakan buat <i>Pull Request</i> pada repository aplikasi ini.
+      </p>
+      <p>
+        <strong>Kredit</strong>
+        <ul>
+          <li>
+            Ikon oleh{" "}
+            <a href="https://iconscout.com/icon/bus-359" className="href">
+              IconScout
+            </a>
+          </li>
+          <li>
+            Peta oleh{" "}
+            <a href="https://https://www.openstreetmap.org" className="href">
+              OpenStreetMap
+            </a>
+          </li>
+        </ul>
       </p>
       <Space>
         <a
@@ -15,7 +31,7 @@ export default function About() {
           target={"_blank"}
         >
           <Button size="small">
-            <LinkOutline /> Github
+            <LinkOutline /> Repository (Github)
           </Button>
         </a>
         <a href="https://twitter.com/famasya" target={"_blank"}>

@@ -1,5 +1,6 @@
 import { Button, CheckList, Popup, SearchBar, Space, Tag } from "antd-mobile";
 import { useMemo, useState } from "react";
+import stc from "string-to-color";
 import { useFilterState } from "~/common/states";
 
 export default function SetLocation() {
@@ -67,11 +68,9 @@ export default function SetLocation() {
           >
             {filteredStops.map((stop, i) => (
               <CheckList.Item key={stop.name} value={stop.name}>
-                {stop.type == "Suroboyo Bus" ? (
-                  <Tag color={"#87d068"}>{stop.type}</Tag>
-                ) : (
-                  <Tag color={"#108ee9"}>{stop.type}</Tag>
-                )}{" "}
+                <Tag color={stc(stop.track)}>
+                  {stop.type} - [{stop.track}]
+                </Tag>
                 - {stop.name}
               </CheckList.Item>
             ))}

@@ -1,23 +1,44 @@
 import { Map, Marker as LMarker } from "leaflet";
 import { RefObject, useEffect, useRef, useState } from "react";
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Polyline, Popup } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
+import stc from "string-to-color";
 import { useFilterState } from "~/common/states";
 import { BusIcon } from "~/icons/bus";
+
 import { BusStopIcon } from "~/icons/bus-stop";
 
 import {
   SBusPositions,
   SBusPositionsResponse,
+  SBusRouteMap,
   SBusStop,
   SbusStopResponse,
+  TransJRoutes,
 } from "~/interfaces/common";
 import TimetableModal from "./timetable-modal";
+
+const routesMap: SBusRouteMap[] = [
+  {
+    id: 1,
+    track: "Purabaya - Rajawali",
+  },
+  {
+    id: 3,
+    track: "Bus Tumpuk",
+  },
+  {
+    id: 6,
+    track: "TIJ - TOW",
+  },
+];
 
 export default function SurabayaBus(props: { mapRef: RefObject<Map> }) {
   const markerRef = useRef<Array<LMarker | null>>([]);
   const [busStops, setBusStops] = useState<SBusStop[]>([]);
+  const [busRoutes, setBusRoutes] = useState<TransJRoutes[]>([]);
   const [busPositions, setBusPositions] = useState<SBusPositions[]>([]);
+
   const {
     showSBusStops,
     autoUpdateSBus,
@@ -35,8 +56,9 @@ export default function SurabayaBus(props: { mapRef: RefObject<Map> }) {
   };
 
   const loadSBusPositions = async () => {
+    const filters = routesMap.map((route) => route.id).join(",");
     const resource = await fetch(
-      `${window.ENV.SBUS_TRACKER_ENDPOINT}/sbus-positions`
+      `${window.ENV.SBUS_TRACKER_ENDPOINT}/sbus-positions?filter=${filters}`
     );
     const positions = (await resource.json()) as SBusPositionsResponse[];
     return positions;
@@ -66,9 +88,27 @@ export default function SurabayaBus(props: { mapRef: RefObject<Map> }) {
 
   useEffect(() => {
     loadSBusStops().then((stops) => {
-      const allStops = stops.map((stop) => stop.stops).flat();
+      const allStops: SBusStop[] = [];
+      stops.map((stop) => {
+        const track = routesMap.find((route) => route.id == parseInt(stop.key));
+        if (track) {
+          stop.stops.map((stop) => {
+            storeBusStops("Suroboyo Bus", track.track, stop.nama);
+            allStops.push({ ...stop, track: track.track });
+          });
+          setBusRoutes((routes) => [
+            ...routes,
+            {
+              coordinate: stop.stops.map((loc) => [
+                parseFloat(loc.lat),
+                parseFloat(loc.lon),
+              ]),
+              track: track.track,
+            },
+          ]);
+        }
+      });
       setBusStops(allStops);
-      allStops.map((stop) => storeBusStops("Suroboyo Bus", stop.nama));
     });
 
     if (selectedBusStop) {
@@ -77,7 +117,7 @@ export default function SurabayaBus(props: { mapRef: RefObject<Map> }) {
       const stopIdx = busStops.findIndex(
         (stop) => stop.nama == selectedBusStop
       );
-      if (stopIdx > 0 && map && marker) {
+      if (stopIdx > -1 && map && marker) {
         map.flyTo(
           [
             parseFloat(busStops[stopIdx].lat),
@@ -94,6 +134,16 @@ export default function SurabayaBus(props: { mapRef: RefObject<Map> }) {
 
   return (
     <div key={"sbus-pos-map"}>
+      {busRoutes.map((route, i) => {
+        return (
+          <Polyline
+            key={i}
+            pathOptions={{ color: stc(route.track), opacity: 0.9, weight: 5 }}
+            positions={route.coordinate}
+          />
+        );
+      })}
+
       {/* Bus positions */}
       {showSBus &&
         busPositions.map((pos, index) => {

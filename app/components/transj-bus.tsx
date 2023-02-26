@@ -1,22 +1,24 @@
-import { LatLngExpression, Map, Marker as LMarker } from "leaflet";
+import { Map, Marker as LMarker } from "leaflet";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Marker, Polyline, Popup } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 import { io, Socket } from "socket.io-client";
+import stc from "string-to-color";
 import { useFilterState } from "~/common/states";
 import { BusIcon } from "~/icons/bus";
 import { BusStopIcon } from "~/icons/bus-stop";
-import { TransJBusStop } from "~/interfaces/common";
+import { TransJBusStop, TransJRoutes } from "~/interfaces/common";
 import { TransJEvent } from "~/interfaces/transj-event";
-import routes from "~/static/routes.json";
 import stops from "~/static/transj-bus-stops.json";
+import routes from "~/static/transj-routes.json";
 
-const busRoutes = routes as LatLngExpression[];
+// const busRoutes = routes.JTM1 as LatLngExpression[];
+const busRoutes = routes as TransJRoutes[];
 const busStops = stops as TransJBusStop[];
 
 export default function TransJBusPos(props: { mapRef: RefObject<Map> }) {
   const markerRef = useRef<Array<LMarker | null>>([]);
-  const [positions, setPositions] = useState<TransJEvent[]>([]);
+  const [busPositions, setBusPositions] = useState<TransJEvent[]>([]);
   const { showTransJStops, showTransJ, storeBusStops, selectedBusStop } =
     useFilterState((state) => state);
 
@@ -36,15 +38,17 @@ export default function TransJBusPos(props: { mapRef: RefObject<Map> }) {
   };
 
   useEffect(() => {
-    busStops.map((stop) => storeBusStops("Trans Jatim", stop.sh_name));
+    busStops.map((stop) =>
+      storeBusStops("Trans Jatim", stop.kor, stop.sh_name)
+    );
     loadTransJPositions()
       .then((results) => {
-        setPositions(results);
+        setBusPositions(results);
       })
       .then(() => {
         const socket: Socket = io(`${window.ENV.TRANSJ_TRACKER_ENDPOINT}`);
         socket.on("update_jatim", (event: TransJEvent) => {
-          setPositions((positions) =>
+          setBusPositions((positions) =>
             positions.map((item, i) => {
               if (item.id === event.id) {
                 item["lat"] = event.lat;
@@ -62,7 +66,7 @@ export default function TransJBusPos(props: { mapRef: RefObject<Map> }) {
         (stop) => stop.sh_name == selectedBusStop
       );
       const map = props.mapRef.current;
-      if (stopIdx > 0 && map && marker) {
+      if (stopIdx > -1 && map && marker) {
         map.flyTo([busStops[stopIdx].sh_lat, busStops[stopIdx].sh_lng], 13);
         marker[stopIdx]?.openPopup();
       }
@@ -71,22 +75,27 @@ export default function TransJBusPos(props: { mapRef: RefObject<Map> }) {
 
   return (
     <div key={"transj-pos-map"}>
-      <Polyline
-        pathOptions={{ color: "black", opacity: 0.6 }}
-        positions={busRoutes}
-      />
+      {busRoutes.map((route, i) => {
+        return (
+          <Polyline
+            key={i}
+            pathOptions={{ color: stc(route.track), opacity: 0.9, weight: 5 }}
+            positions={route.coordinate}
+          />
+        );
+      })}
 
       {/* Bus pos */}
       {showTransJ &&
-        positions.map((pos, index) => {
+        busPositions.map((pos, index) => {
           return (
             <ReactLeafletDriftMarker
               duration={1000}
-              key={"m" + index}
+              key={"mp" + index}
               position={[pos.lat, pos.lng]}
               icon={BusIcon({ color: "orange" })}
             >
-              <Popup key={"p" + index}>
+              <Popup key={"pp" + index}>
                 <h4>
                   {pos.plate_number} ({pos.name})
                 </h4>

@@ -1,7 +1,8 @@
 import { create } from "zustand";
 
 interface BusStop {
-  type: "Suroboyo Bus" | "Trans Jatim";
+  type: string;
+  track: string;
   name: string;
 }
 interface FilterState {
@@ -18,7 +19,11 @@ interface FilterState {
   toggleTransJStops: () => void;
   toggleSBus: () => void;
   toggleTransJ: () => void;
-  storeBusStops: (type: BusStop["type"], name: string) => void;
+  storeBusStops: (
+    type: BusStop["type"],
+    track: BusStop["track"],
+    name: string
+  ) => void;
 }
 
 export const useFilterState = create<FilterState>((set) => ({
@@ -30,11 +35,12 @@ export const useFilterState = create<FilterState>((set) => ({
   selectedBusStop: null,
   busStops: [],
   setSelectedBusStop: (name) => set(() => ({ selectedBusStop: name })),
-  storeBusStops: (type, name) =>
+  storeBusStops: (type, track, name) =>
     set((state) => {
       const exist = state.busStops.find((current) => current.name == name);
       if (!exist) {
         state.busStops.push({
+          track: track,
           type: type,
           name: name,
         });
