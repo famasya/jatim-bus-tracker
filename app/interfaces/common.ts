@@ -1,3 +1,5 @@
+import { LatLngExpression } from "leaflet";
+
 export interface BusPosition {
   id: string;
   info: string;
@@ -18,15 +20,26 @@ export interface TransJBusStop {
   tw_lng: number;
 }
 
+export interface TransJRoutes {
+  track: string;
+  coordinate: LatLngExpression[];
+}
+
 export interface SBusStop {
   uniqid: string;
   nama: string;
+  track?: string;
   description: string;
   lat: string;
   lon: string;
   arah: number;
   priority: number;
   timetable: string;
+}
+
+export interface SBusRouteMap {
+  track: string;
+  id: number;
 }
 
 export interface SbusStopResponse {
