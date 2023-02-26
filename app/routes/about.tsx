@@ -31,7 +31,7 @@ export default function About() {
           target={"_blank"}
         >
           <Button size="small">
-            <LinkOutline /> Repository (Github)
+            <LinkOutline /> Repository
           </Button>
         </a>
         <a href="https://twitter.com/famasya" target={"_blank"}>
