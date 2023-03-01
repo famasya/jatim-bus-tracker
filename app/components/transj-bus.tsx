@@ -29,15 +29,20 @@ export default function TransJBusPos(props: { mapRef: RefObject<Map> }) {
 
     const socket: Socket = io(`${window.ENV.TRANSJ_TRACKER_ENDPOINT}`);
     socket.on("update_jatim", (event: TransJEvent) => {
-      setBusPositions((positions) =>
-        positions.map((item, i) => {
-          if (item.id === event.id) {
-            item["lat"] = event.lat;
-            item["lng"] = event.lng;
-          }
-          return item;
-        })
-      );
+      const exist = busPositions.find(({ id }) => id === event.id);
+      if (exist) {
+        setBusPositions((positions) =>
+          positions.map((item, i) => {
+            if (item.id === event.id) {
+              item["lat"] = event.lat;
+              item["lng"] = event.lng;
+            }
+            return item;
+          })
+        );
+      } else {
+        setBusPositions([...busPositions, event]);
+      }
     });
 
     if (selectedBusStop) {
