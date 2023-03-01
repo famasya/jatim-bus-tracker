@@ -22,45 +22,23 @@ export default function TransJBusPos(props: { mapRef: RefObject<Map> }) {
   const { showTransJStops, showTransJ, storeBusStops, selectedBusStop } =
     useFilterState((state) => state);
 
-  const loadTransJPositions = async () => {
-    const resource = await fetch(
-      `${window.ENV.TRANSJ_TRACKER_ENDPOINT}/api/findAll`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Origin: "https://jatimbus.workers.dev",
-          Referer: "https://jatimbus.workers.dev",
-        },
-        body: JSON.stringify({ key: "ngiraya" }),
-      }
-    );
-    const results = (await resource.json()) as { data: TransJEvent[] };
-    return results.data;
-  };
-
   useEffect(() => {
     busStops.map((stop) =>
       storeBusStops("Trans Jatim", stop.kor, stop.sh_name)
     );
-    loadTransJPositions()
-      .then((results) => {
-        setBusPositions(results);
-      })
-      .then(() => {
-        const socket: Socket = io(`${window.ENV.TRANSJ_TRACKER_ENDPOINT}`);
-        socket.on("update_jatim", (event: TransJEvent) => {
-          setBusPositions((positions) =>
-            positions.map((item, i) => {
-              if (item.id === event.id) {
-                item["lat"] = event.lat;
-                item["lng"] = event.lng;
-              }
-              return item;
-            })
-          );
-        });
-      });
+
+    const socket: Socket = io(`${window.ENV.TRANSJ_TRACKER_ENDPOINT}`);
+    socket.on("update_jatim", (event: TransJEvent) => {
+      setBusPositions((positions) =>
+        positions.map((item, i) => {
+          if (item.id === event.id) {
+            item["lat"] = event.lat;
+            item["lng"] = event.lng;
+          }
+          return item;
+        })
+      );
+    });
 
     if (selectedBusStop) {
       const marker = markerRef.current;

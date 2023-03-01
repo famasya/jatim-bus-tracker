@@ -1,10 +1,10 @@
+import { useLocation, useNavigate } from "@remix-run/react";
 import { TabBar } from "antd-mobile";
 import {
   CompassOutline,
   ContentOutline,
   FaceRecognitionOutline,
 } from "antd-mobile-icons";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const tabs = [
   {
