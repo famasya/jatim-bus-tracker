@@ -29,6 +29,8 @@ export default function TransJBusPos(props: { mapRef: RefObject<Map> }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Origin: "https://jatimbus.workers.dev",
+          Referer: "https://jatimbus.workers.dev",
         },
         body: JSON.stringify({ key: "ngiraya" }),
       }
