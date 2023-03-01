@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MapFilter from "./map-filter";
 import SurabayaBus from "./suroboyo-bus";
+import TransJBusPos from "./transj-bus";
 
 const Map = () => {
   const mapRef = useRef<LMap>(null);
@@ -21,6 +22,7 @@ const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
+      <TransJBusPos mapRef={mapRef} />
       <SurabayaBus mapRef={mapRef} />
       <MapFilter />
     </MapContainer>
