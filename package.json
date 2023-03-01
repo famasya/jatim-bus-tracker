@@ -8,7 +8,7 @@
     "dev": "npm-run-all build --parallel \"dev:*\"",
     "start": "cross-env NODE_ENV=production npm run wrangler",
     "typecheck": "tsc",
-    "wrangler": "wrangler --compatibility-date=2023-02-24 pages dev ./public"
+    "wrangler": "wrangler pages dev ./public"
   },
   "dependencies": {
     "@ionic/react": "^6.5.4",
